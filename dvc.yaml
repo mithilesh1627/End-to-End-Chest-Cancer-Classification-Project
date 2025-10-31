@@ -1,17 +1,17 @@
 stages:
   data_ingestion:
-    cmd: python src/CnnClassifier/pipeline/stage_01_data_ingestion.py
+    cmd: python src/CnnClassifier/pipeline/stage01.py
     deps:
-      - src/cnnClassifier/pipeline/stage_01_data_ingestion.py
+      - src/cnnClassifier/pipeline/stage01.py
       - config/config.yaml
     outs:
       - artifacts/data_ingestion/Data
 
 
   prepare_base_model:
-    cmd: python src/CnnClassifier/pipeline/stage_02_prepare_base_model.py
+    cmd: python src/CnnClassifier/pipeline/stage02.py
     deps:
-      - src/CnnClassifier/pipeline/stage_02_prepare_base_model.py
+      - src/CnnClassifier/pipeline/stage02.py
       - config/config.yaml
     params:
       - IMAGE_SIZE
@@ -24,9 +24,9 @@ stages:
 
 
   training:
-    cmd: python src/CnnClassifier/pipeline/stage_03_model_trainer.py
+    cmd: python src/CnnClassifier/pipeline/stage03.py
     deps:
-      - src/CnnClassifier/pipeline/stage_03_model_trainer.py
+      - src/CnnClassifier/pipeline/stage03.py
       - config/config.yaml
       - artifacts/data_ingestion/Data
       - artifacts/prepare_base_model
@@ -40,9 +40,9 @@ stages:
 
 
   evaluation:
-    cmd: python src/CnnClassifier/pipeline/stage_04_model_evaluation.py
+    cmd: python src/CnnClassifier/pipeline/stage04.py
     deps:
-      - src/CnnClassifier/pipeline/stage_04_model_evaluation.py
+      - src/CnnClassifier/pipeline/stage04.py
       - config/config.yaml
       - artifacts/data_ingestion/Data
       - artifacts/training/model.h5
